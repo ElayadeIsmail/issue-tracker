@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
-from app.core.models.user import *
+from app.models.users import *
 from sqlmodel import SQLModel
 
 from alembic import context
