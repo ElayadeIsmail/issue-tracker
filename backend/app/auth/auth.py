@@ -7,11 +7,11 @@ from fastapi import Depends, HTTPException,status
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-async def authenticate_user(email:str,password:str):
-    user = await find_user(FindUser(email=email))
+async def authenticate_user(username:str,password:str):
+    user = await find_user(FindUser(username=username))
     if user is None:
         return False;
-    if not verify_password(user.hashed_password,password):
+    if not verify_password(password,user.hashed_password):
         return False
     return user
 
@@ -25,7 +25,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     token_data = decode_access_token(token=token)
     if token_data is None:
         raise credentials_exception
-    user = await find_user(FindUser(email=token_data.email))
+    user = await find_user(FindUser(username=token_data.username))
     if user is None:
         raise credentials_exception
     return user

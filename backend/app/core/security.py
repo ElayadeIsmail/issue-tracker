@@ -2,7 +2,7 @@ from passlib.context import CryptContext
 from datetime import timedelta,datetime
 from jose import JWTError, jwt
 
-from app.core import settings
+from app.core.settings import settings
 from app.models.token import TokenData
 
 ALGORITHM = "HS256"
@@ -30,10 +30,10 @@ def create_access_token(data:dict,expires_delta:timedelta | None= None):
 def decode_access_token(token:str)->TokenData | None:
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[ALGORITHM])
-        email: str = payload.get("sub")
-        if email is None:
+        username: str = payload.get("sub")
+        if username is None:
             raise None
-        token_data = TokenData(email==email)
+        token_data = TokenData(username=username)
     except JWTError:
         return None
     return token_data
