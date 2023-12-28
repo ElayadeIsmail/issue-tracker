@@ -10,6 +10,7 @@ psycopg = {extras = ["pool", "binary"], version = "*"}
 passlib = {extras = ["bcrypt"], version = "*"}
 fastapi = {extras = ["all"], version = "*"}
 bcrypt = "==4.0.1"
+python-jose = {extras = ["cryptography"], version = "*"}
 
 [dev-packages]
 
