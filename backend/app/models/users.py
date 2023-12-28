@@ -1,7 +1,11 @@
 from sqlmodel import Relationship, SQLModel,Field
-from typing import Optional,List
+from typing import Optional,List,TYPE_CHECKING
 
 from app.models.projects_to_users import ProjectUserLink
+
+# to avoid circular imports
+if TYPE_CHECKING:
+    from .projects import Project
     
 # Database model, database table inferred from class name
 class User(SQLModel, table=True):
