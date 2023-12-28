@@ -9,6 +9,8 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from app.models.users import *
+from app.models.projects import *
+from app.models.projects_to_users import *
 from sqlmodel import SQLModel
 
 from alembic import context
