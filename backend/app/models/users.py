@@ -1,5 +1,7 @@
-from sqlmodel import SQLModel,Field
-from typing import Optional
+from sqlmodel import Relationship, SQLModel,Field
+from typing import Optional,List
+
+from app.models.projects_to_users import ProjectUserLink
     
 # Database model, database table inferred from class name
 class User(SQLModel, table=True):
@@ -12,5 +14,10 @@ class User(SQLModel, table=True):
     is_active: bool = True
     is_superuser: bool = False
     hashed_password: str
+    
+    created_projects: List["Project"] = Relationship(back_populates="admin")
+    collaborator_projects: List["Project"] = Relationship(back_populates="collaborators",link_model=ProjectUserLink)
+    
+
     
     
