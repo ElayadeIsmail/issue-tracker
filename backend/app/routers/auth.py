@@ -3,16 +3,17 @@ from typing import Annotated
 from fastapi import APIRouter, Depends,HTTPException,status
 from fastapi.security import OAuth2PasswordRequestForm
 from app.core.settings import settings
+from app.models.users import User
 from app.schemas.users import UserOut,CreateUser
 from app.models.token import Token
 from app.repositories.users import create_user
 from app.core.security import create_access_token
-from app.auth.auth import authenticate_user
+from app.auth.auth import authenticate_user, get_current_user
 
 
 router = APIRouter()
 
-@router.post("/login/access_token",response_model=Token)
+@router.post("/token",response_model=Token)
 async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
     user = await authenticate_user(form_data.username,form_data.password)
     if not user:
@@ -29,3 +30,7 @@ async def register(user_input:CreateUser):
     user = await create_user(user_input)
     userResponse = UserOut(email=user.email,username=user.username,id=user.id,full_name=user.full_name)
     return {"user":userResponse}
+
+@router.post("/current_user",response_model=UserOut)
+async def current_user( current_user: Annotated[User, Depends(get_current_user)]):
+    return current_user

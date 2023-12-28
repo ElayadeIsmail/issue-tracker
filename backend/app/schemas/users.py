@@ -1,10 +1,9 @@
 from sqlmodel import SQLModel,Field
 from pydantic import EmailStr
-from typing import Optional
 
 class CreateUser(SQLModel):
     email:EmailStr;
-    username:str = Field(min_length=3,max_length=100);
+    username:str = Field(min_length=3,max_length=100,regex="^[a-zA-Z0-9-]+$");
     full_name:str = Field(min_length=3,max_length=250)
     password: str = Field(min_length=8,max_length=100)
     
