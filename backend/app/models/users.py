@@ -6,6 +6,7 @@ from app.models.projects_to_users import ProjectUserLink
 # to avoid circular imports
 if TYPE_CHECKING:
     from .projects import Project
+    from .issues import Issue
     
 # Database model, database table inferred from class name
 class User(SQLModel, table=True):
@@ -21,7 +22,7 @@ class User(SQLModel, table=True):
     
     created_projects: List["Project"] = Relationship(back_populates="admin")
     collaborator_projects: List["Project"] = Relationship(back_populates="collaborators",link_model=ProjectUserLink)
-    
+    assigned_issues: List["Issue"] =Relationship(back_populates="assigned_issues")
 
     
     
