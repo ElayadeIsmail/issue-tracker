@@ -22,7 +22,7 @@ class User(SQLModel, table=True):
     
     created_projects: List["Project"] = Relationship(back_populates="admin")
     collaborator_projects: List["Project"] = Relationship(back_populates="collaborators",link_model=ProjectUserLink)
-    assigned_issues: List["Issue"] =Relationship(back_populates="assigned_issues")
+    assigned_issues: List["Issue"] =Relationship(back_populates="assignee")
 
     
     
