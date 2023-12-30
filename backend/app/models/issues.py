@@ -9,12 +9,12 @@ if TYPE_CHECKING:
     from .users import User
     from .projects import Project
 
-class Priority(Enum):
+class IssuePriority(Enum):
     Hight = 3
     Medium = 2
     Low = 1
 
-class Status(str,Enum):
+class IssueStatus(str,Enum):
     done = "done"
     in_progress = "in_progress"
     not_started = "not_started"
@@ -26,8 +26,8 @@ class Issue(BaseModel,table=True):
     id:Optional[int] = Field(default=None,primary_key=True)
     name:str=Field(min_length=3)
     description:Optional[str]=Field(default=None)
-    status:Optional[Status] = Field(default=Status.not_started)
-    priority:Optional[Priority] =Field(default=None)
+    status:Optional[IssueStatus] = Field(default=IssueStatus.not_started)
+    priority:Optional[IssuePriority] =Field(default=None)
     due_date: Optional[datetime] = Field(default=None)
     project_id: Optional[int] = Field(default=None, foreign_key="projects.id")
     project:Optional["Project"] = Relationship(back_populates="issues")
