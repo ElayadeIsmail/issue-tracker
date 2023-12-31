@@ -20,9 +20,12 @@ async def get_project_issues(project_id:int,current_user:User):
     if not has_access:
         raise not_found_error()
     with Session(engine) as session:
-        statement = select(Issue).where(Issue.project_id == project_id)
-        result = session.exec(statement).all()
-        return result
+        statement = select(Issue,User).outerjoin(User,Issue.assignee_id == User.id).where(Issue.project_id == project_id).order_by(Issue.updated_at.desc())
+        result = session.exec(statement)
+        issues = []
+        for issue,user in result:
+            issues.append({**issue.model_dump(),"assignee":user})
+        return issues
 
 
 async def create_issue(project_id:int,issue_args:CreateIssue,current_user:User):
