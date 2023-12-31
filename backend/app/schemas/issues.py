@@ -6,7 +6,7 @@ from app.models.issues import IssuePriority, IssueStatus
 from app.schemas.users import UserOut
 
 
-class CreateIssue(SQLModel):
+class IssueIn(SQLModel):
     name:str=Field(min_length=3)
     description:Optional[str]=Field(default=None)
     status:Optional[IssueStatus] = Field(default=IssueStatus.not_started)
