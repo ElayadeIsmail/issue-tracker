@@ -30,7 +30,7 @@ class Issue(BaseModel,table=True):
     priority:Optional[IssuePriority] =Field(default=None)
     due_date: Optional[datetime] = Field(default=None)
     project_id: Optional[int] = Field(default=None, foreign_key="projects.id")
-    project:Optional["Project"] = Relationship(back_populates="issues")
+    project:Optional["Project"] = Relationship(back_populates="issues",sa_relationship_kwargs={"cascade": "delete"})
     
     assignee_id: Optional[int] = Field(default=None, foreign_key="users.id")
     assignee:Optional["User"] = Relationship(back_populates="assigned_issues")
