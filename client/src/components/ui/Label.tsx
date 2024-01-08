@@ -8,12 +8,10 @@ const labelVariants = cva(
 
 interface LabelProps
 	extends JSX.LabelHTMLAttributes<HTMLLabelElement>,
-		VariantProps<typeof labelVariants> {}
+		VariantProps<typeof labelVariants> {
+	name: string;
+}
 
-export function Label({ class: className, children, ...props }: LabelProps) {
-	return (
-		<label class={cn(labelVariants(), className)} {...props}>
-			{children}
-		</label>
-	);
+export function Label({ class: className, ...props }: LabelProps) {
+	return <label class={cn(labelVariants(), className)} {...props} />;
 }
